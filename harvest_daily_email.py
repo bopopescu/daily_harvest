@@ -1,21 +1,17 @@
 import sys
-#from harvest import Harvest, HarvestError
 from Harvest.harvest import Harvest, HarvestError
 from datetime import datetime, timedelta
 import time
 import simplejson as json
 import requests
-import pprint
-
-# get reciptients
-sendto = sys.argv
+#import pprint
 
 #Mailgun Setup
 mailgun_creds = json.loads(open('mailgun.json').read())
 mgkey = mailgun_creds['key']
 mgdomain = mailgun_creds['domain']
-recipients = ['patrick@avatarnewyork.com']
 request_url = 'https://api.mailgun.net/v2/{0}/messages'.format(mgdomain)
+recipients = json.loads(open('recipients.json').read()).keys()
 
 # Harvest Setup
 harvest_creds = json.loads(open('harvest.json').read())
@@ -74,12 +70,12 @@ try:
                 email_html += tr + punch + etr
         email_html += et
         
-        for recipient in sendto:
+        for recipient in recipients:
                 request = requests.post(request_url, auth=('api', mgkey), data={
                         'from': 'timetracker@mg.avatarnewyork.com',
                         'to': recipient,
-                        'subject': 'Hello',
-                        'text': 'Hello from Mailgun',
+                        'subject': 'Harvest Daily Report - Yesterday',
+                        'text': 'sent via mailgun',
                         'html': email_html
                 })
                 #print 'Status: {0}'.format(request.status_code)
