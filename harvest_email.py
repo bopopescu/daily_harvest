@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 import time
 import simplejson as json
 import requests
-#import pprint
+import pprint
 
 #Mailgun Setup
 mailgun_creds = json.loads(open('mailgun.json').read())
@@ -27,12 +27,12 @@ project_hours={}
 timesheet_punches={}
 email_html=""
 
-t = "<table>"
-tr = "<tr>"
-td = "<td>"
-etr = "</tr>"
-etd = "</td>"
-et = "</table>"
+t = '<table cellspacing="3">'
+tr = '<tr>'
+td = '<td>'
+etr = '</tr>'
+etd = '</td>'
+et = '</table>'
 
 # Yesterday - adjust to your liking
 end = datetime.today().replace( hour=0, minute=0, second=0 )
@@ -43,15 +43,15 @@ try:
                 user_hours[user.email] = 0
                 user_names[user.email] = user.first_name + " " + user.last_name
                 for entry in user.entries( start, end ):
-                        user_hours[user.email] += entry.hours                                
-                        project = h.project(entry.project_id)
-                        client = h.client(project.client_id)
-                        if(project_hours.has_key(project.name)):
-                                project_hours[project.name] += entry.hours
-                        else:
-                                project_hours[project.name] = entry.hours
-                        timesheet_punches[entry.id] = td + str(user.first_name) + etd + td + str(user.last_name) + etd + td + str(client.name) + etd + td + str(project.name) + etd + td + str(entry.hours) + etd
-                                
+                        if(not entry.adjustment_record):
+                                user_hours[user.email] += entry.hours                                
+                                project = h.project(entry.project_id)
+                                client = h.client(project.client_id)
+                                if(project_hours.has_key(project.name)):
+                                        project_hours[project.name] += entry.hours
+                                else:
+                                        project_hours[project.name] = entry.hours
+                                timesheet_punches[entry.id] = td + str(user.first_name) + ' ' + str(user.last_name) + etd + td + str(entry.hours) + etd + td + str(client.name) + etd + td + str(project.name) + etd + td + str(entry.notes) + etd
         email_html += "<br><br>User Hours"
         email_html += t
         for email in sorted(user_names.keys()):
