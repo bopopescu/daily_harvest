@@ -10,6 +10,7 @@ import pprint
 mailgun_creds = json.loads(open('mailgun.json').read())
 mgkey = mailgun_creds['key']
 mgdomain = mailgun_creds['domain']
+email_from = mailgun_creds['from']
 request_url = 'https://api.mailgun.net/v2/{0}/messages'.format(mgdomain)
 recipients = json.loads(open('recipients.json').read()).keys()
 
@@ -72,7 +73,7 @@ try:
         
         for recipient in recipients:
                 request = requests.post(request_url, auth=('api', mgkey), data={
-                        'from': 'timetracker@mg.avatarnewyork.com',
+                        'from': email_from,
                         'to': recipient,
                         'subject': 'Harvest Daily Report - Yesterday',
                         'text': 'sent via mailgun',
