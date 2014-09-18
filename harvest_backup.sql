@@ -16,8 +16,9 @@
 -- Table structure for table `timesheet`
 --
 
-DROP TABLE IF EXISTS `timesheet`;
+-- DROP TABLE IF EXISTS `timesheet`;
 CREATE TABLE `timesheet` (
+  `harvest_backup_id` int(11) NOT NULL auto_increment,
   `id` bigint(20) NOT NULL,
   `project_id` int(11) NOT NULL,
   `task_id` int(11) NOT NULL,
@@ -29,7 +30,7 @@ CREATE TABLE `timesheet` (
   `updated_at` datetime default NULL,
   `project` varchar(255) default NULL,
   `task` varchar(255) default NULL,
-  PRIMARY KEY  (`id`)
+  PRIMARY KEY  (`harvest_backup_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
