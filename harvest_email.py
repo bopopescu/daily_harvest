@@ -41,18 +41,19 @@ start = end + timedelta(-1)
 
 try:
         for user in h.users():
-                user_hours[user.email] = 0
-                user_names[user.email] = user.first_name + " " + user.last_name
-                for entry in user.entries( start, end ):
-                        if(not entry.adjustment_record):
-                                user_hours[user.email] += entry.hours                                
-                                project = h.project(entry.project_id)
-                                client = h.client(project.client_id)
-                                if(project_hours.has_key(project.name)):
-                                        project_hours[project.name] += entry.hours
-                                else:
-                                        project_hours[project.name] = entry.hours
-                                timesheet_punches[entry.id] = td + str(user.first_name) + ' ' + str(user.last_name) + etd + td + str(entry.hours) + etd + td + str(client.name) + etd + td + str(project.name) + etd + td + str(entry.notes) + etd
+                if(user.is_active == True):
+                        user_hours[user.email] = 0
+                        user_names[user.email] = user.first_name + " " + user.last_name
+                        for entry in user.entries( start, end ):
+                                if(not entry.adjustment_record):
+                                        user_hours[user.email] += entry.hours                                
+                                        project = h.project(entry.project_id)
+                                        client = h.client(project.client_id)
+                                        if(project_hours.has_key(project.name)):
+                                                project_hours[project.name] += entry.hours
+                                        else:
+                                                project_hours[project.name] = entry.hours
+                                        timesheet_punches[entry.id] = td + str(user.first_name) + ' ' + str(user.last_name) + etd + td + str(entry.hours) + etd + td + str(client.name) + etd + td + str(project.name) + etd + td + str(entry.notes) + etd
         email_html += "<br><br>User Hours"
         email_html += t
         for email in sorted(user_names.keys()):
