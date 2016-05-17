@@ -5,4 +5,4 @@ ADD . /app
 
 RUN apk add --update py-requests
 
-CMD ["python", "harvest_email.py"]
+CMD ["python", "harvest_backup.py"]
