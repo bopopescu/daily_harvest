@@ -1,21 +1,34 @@
 import sys
-from Harvest.harvest import Harvest, HarvestError
+reload(sys)  # Reload does the trick!
+sys.setdefaultencoding('UTF8')
+sys.path.append("packages")
+import os
+import requests
+#from packages.harvest import Harvest, HarvestError
+from harvest import Harvest, HarvestError
+
 from datetime import datetime, timedelta
 import time
-import simplejson as json
-import requests
+import json
 import pprint
 
+
 #Mailgun Setup
-mailgun_creds = json.loads(open('mailgun.json').read())
+#mailgun_creds = json.loads(open('mailgun.json').read())
+mailgun_creds = json.loads(os.getenv("MAILGUN"))
+
 mgkey = mailgun_creds['key']
 mgdomain = mailgun_creds['domain']
 email_from = mailgun_creds['from']
 request_url = 'https://api.mailgun.net/v2/{0}/messages'.format(mgdomain)
-recipients = json.loads(open('recipients.json').read()).keys()
+
+#recipients = json.loads(open('recipients.json').read()).keys()
+recipients = json.loads(os.getenv("RECIPIENTS")).keys()
+
 
 # Harvest Setup
-harvest_creds = json.loads(open('harvest.json').read())
+#harvest_creds = json.loads(open('harvest.json').read())
+harvest_creds = json.loads(os.getenv("HARVEST"))
 URI = harvest_creds['uri']
 EMAIL = harvest_creds['email']
 PASS = harvest_creds['password']

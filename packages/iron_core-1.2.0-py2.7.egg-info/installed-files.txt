@@ -1,0 +1,8 @@
+../iron_core.py
+../iron_core.pyc
+./
+PKG-INFO
+requires.txt
+top_level.txt
+dependency_links.txt
+SOURCES.txt

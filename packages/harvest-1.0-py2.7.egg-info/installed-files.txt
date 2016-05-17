@@ -1,0 +1,8 @@
+../harvest.py
+../harvest.pyc
+./
+requires.txt
+PKG-INFO
+top_level.txt
+dependency_links.txt
+SOURCES.txt

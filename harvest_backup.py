@@ -1,14 +1,21 @@
 import sys
-from Harvest.harvest import Harvest, HarvestError
+reload(sys)  # Reload does the trick!
+sys.setdefaultencoding('UTF8')
+sys.path.append("packages")
+#from Harvest.harvest import Harvest, HarvestError
+import os
+from harvest import Harvest, HarvestError
 from datetime import datetime, timedelta
 import time
-import simplejson as json
+#import simplejson as json
+import json
 import mysql.connector
 from mysql.connector import errorcode
 #import pprint
 
 # Harvest Setup
-harvest_creds = json.loads(open('harvest.json').read())
+#harvest_creds = json.loads(open('harvest.json').read())
+harvest_creds = json.loads(os.getenv("HARVEST"))
 URI = harvest_creds['uri']
 EMAIL = harvest_creds['email']
 PASS = harvest_creds['password']
@@ -25,7 +32,8 @@ email_html=""
 end = datetime.today().replace( hour=0, minute=0, second=0 )
 start = end + timedelta(-1)
 
-mysql_creds = json.loads(open('mysql.json').read())
+#mysql_creds = json.loads(open('mysql.json').read())
+mysql_creds = json.loads(os.getenv("MYSQL"))
 cnx = mysql.connector.connect(user=mysql_creds['user'],
                               password=mysql_creds['password'],
                               host=mysql_creds['host'],
