@@ -14,8 +14,10 @@ from mysql.connector import errorcode
 #import pprint
 
 # Harvest Setup
-#harvest_creds = json.loads(open('harvest.json').read())
-harvest_creds = json.loads(os.getenv("HARVEST"))
+harvest_creds = {'uri': os.getenv("HARVEST_URI"),
+                 'email': os.getenv("HARVEST_EMAIL"),
+                 'password': os.getenv("HARVEST_PASSWORD")}
+
 URI = harvest_creds['uri']
 EMAIL = harvest_creds['email']
 PASS = harvest_creds['password']
@@ -33,11 +35,18 @@ end = datetime.today().replace( hour=0, minute=0, second=0 )
 start = end + timedelta(-1)
 
 #mysql_creds = json.loads(open('mysql.json').read())
-mysql_creds = json.loads(os.getenv("MYSQL"))
+#mysql_creds = json.loads(os.getenv("MYSQL"))
+mysql_creds = {'user': os.getenv("MYSQL_USER"),
+               'password': os.getenv("MYSQL_PASSWORD"),
+               'database': os.getenv("MYSQL_DATABASE"),
+               'host': os.getenv("MYSQL_HOST"),
+               'port': os.getenv("MYSQL_PORT", 3306)}
+
 cnx = mysql.connector.connect(user=mysql_creds['user'],
                               password=mysql_creds['password'],
                               host=mysql_creds['host'],
-                              database=mysql_creds['database'])
+                              database=mysql_creds['database'],
+                              port=mysql_creds['port'])
 cursor = cnx.cursor()
     
 

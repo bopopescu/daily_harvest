@@ -14,21 +14,23 @@ import pprint
 
 
 #Mailgun Setup
-#mailgun_creds = json.loads(open('mailgun.json').read())
-mailgun_creds = json.loads(os.getenv("MAILGUN"))
+mailgun_creds = {"key": os.getenv("MAILGUN_KEY"), 
+                 "domain": os.getenv("MAILGUN_DOMAIN"), 
+                 "from": os.getenv("MAILGUN_FROM")}
 
 mgkey = mailgun_creds['key']
 mgdomain = mailgun_creds['domain']
 email_from = mailgun_creds['from']
 request_url = 'https://api.mailgun.net/v2/{0}/messages'.format(mgdomain)
 
-#recipients = json.loads(open('recipients.json').read()).keys()
-recipients = json.loads(os.getenv("RECIPIENTS")).keys()
-
+# Recipients
+recipients = os.getenv("RECIPIENTS").split(",")
 
 # Harvest Setup
-#harvest_creds = json.loads(open('harvest.json').read())
-harvest_creds = json.loads(os.getenv("HARVEST"))
+harvest_creds = {'uri': os.getenv("HARVEST_URI"),
+                 'email': os.getenv("HARVEST_EMAIL"),
+                 'password': os.getenv("HARVEST_PASSWORD")}
+
 URI = harvest_creds['uri']
 EMAIL = harvest_creds['email']
 PASS = harvest_creds['password']
