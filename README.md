@@ -87,6 +87,7 @@ This has been tested on python 2.7
 	
 	# Pull the backup version
 	docker pull docker.io/avatarnewyork/daily-harvest:backup
+	```
 
 2. Execute and pass appropriate environment variables
 
@@ -110,7 +111,7 @@ This has been tested on python 2.7
 3. Register backup
 
     ```bash
-	iron register e 'HARVEST_URI=https://myco.harvestapp.com' -e 'HARVEST_EMAIL=some@email.com' -e 'HARVEST_PASSWORD=secret' -e 'MYSQL_USER=harvest' -e 'MYSQL_PASSWORD=secretpwd' -e 'MYSQL_DATABASE=harvest' -e 'MYSQL_HOST=72.43.52.10' -e 'MYSQL_PORT=3306' daily-harvest:baclkup
+	iron register -e 'HARVEST_URI=https://myco.harvestapp.com' -e 'HARVEST_EMAIL=some@email.com' -e 'HARVEST_PASSWORD=secret' -e 'MYSQL_USER=harvest' -e 'MYSQL_PASSWORD=secretpwd' -e 'MYSQL_DATABASE=harvest' -e 'MYSQL_HOST=72.43.52.10' -e 'MYSQL_PORT=3306' daily-harvest:baclkup
 	```
 	
 4. queue / schedule on iron.io.  See: http://dev.iron.io/worker/getting_started/
